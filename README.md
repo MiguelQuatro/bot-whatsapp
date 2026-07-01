@@ -87,6 +87,8 @@ const HORARIO_EXPEDIENTE = {
 ```bash
 npm start
 ```
+ou
+Botão Ligar(1/2) dentro da Pasta do Projeto
 
 **5. Autentique no WhatsApp**
 
