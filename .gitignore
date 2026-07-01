@@ -9,3 +9,4 @@ kpis.json
 blacklist.json
 historico_atendimentos.json
 node_modules/
+.gitignore
