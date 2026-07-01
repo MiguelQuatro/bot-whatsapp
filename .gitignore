@@ -1,0 +1,11 @@
+.wwebjs_auth/
+.wwebjs_cache/
+qrcode.png
+bot.log
+.env
+*.log
+fila.json
+kpis.json
+blacklist.json
+historico_atendimentos.json
+node_modules/

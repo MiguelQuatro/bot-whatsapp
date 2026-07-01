@@ -1,0 +1,173 @@
+╔════════════════════════════════════════════════════════════════╗
+║              GUIA DE TESTES - FLUXOS DO BOT                    ║
+║                                                                ║
+║  Todos os fluxos devem ser testados após as correções         ║
+╚════════════════════════════════════════════════════════════════╝
+
+🔴 FLUXO 1: VALORES → DIÁRIA (Fluxo Principal com Erro)
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Enviar: qualquer mensagem para iniciar
+  2. Menu aparece, enviar: 1 (Modalidades/Valores/Horários)
+  3. Enviar: 2 (Valores)
+  4. Enviar: 2 (Valores Diários)
+  5. Enviar: 5 (Fit Dance - DEVE SER ACEITO AGORA ✅)
+  6. Enviar: 1 (Confirmar e seguir para horários)
+
+Resultado esperado:
+  ✅ Opção 5 é aceita (Fit Dance)
+  ✅ Avança para o menu de horários
+  ❌ NÃO deve mostrar "escolha uma opção válida"
+
+
+🟡 FLUXO 2: VALORES → MENSAL
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 1 (Modalidades/Valores/Horários)
+  2. Enviar: 2 (Valores)
+  3. Enviar: 1 (Valores Mensais)
+  4. Enviar: 3 (Funcional Kids - DEVE SER ACEITO AGORA ✅)
+  5. Enviar: 1 (Confirmar)
+
+Resultado esperado:
+  ✅ Opção 3 é aceita (Funcional Kids)
+  ✅ Avança para horários
+  ✅ Mostra preço mensal correto
+
+
+🟢 FLUXO 3: VALORES → PLANOS (Já funcionava, mas testar)
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 1 (Modalidades/Valores/Horários)
+  2. Enviar: 2 (Valores)
+  3. Enviar: 3 (Planos)
+  4. Enviar: 2 (Musculação Anual)
+  5. Enviar: 1 (Ver horários)
+
+Resultado esperado:
+  ✅ Opção 2 é aceita
+  ✅ Avança para horários
+
+
+🔵 FLUXO 4: VALORES → PACOTES (Já funcionava, mas testar)
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 1 (Modalidades/Valores/Horários)
+  2. Enviar: 2 (Valores)
+  3. Enviar: 4 (Pacotes Individuais)
+  4. Enviar: 1 (Pacote Seco)
+  5. Enviar: 1 (Ver horários)
+
+Resultado esperado:
+  ✅ Opção 1 é aceita (Pacote Seco)
+  ✅ Avança para horários
+
+
+🟣 FLUXO 5: MODALIDADES DIRETO
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 1 (Modalidades/Valores/Horários)
+  2. Enviar: 1 (Modalidades)
+  3. Enviar: 7 (Hidroginástica)
+  4. Enviar: 2 (Valores) - deve ir para Valores Diários
+  5. Enviar: 1 (Confirmar - com Hidroginástica pré-selecionada)
+
+Resultado esperado:
+  ✅ Opção 7 é aceita
+  ✅ Modalidade é lembrada no contexto
+  ✅ Vai direto para confirmar (não mostra 1-9)
+
+
+🟠 FLUXO 6: HORÁRIOS
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Completar qualquer fluxo de valores até "horários"
+  2. Menu de horários aparece
+  3. Enviar: 1 (Ver todos os horários)
+  4. Enviar: 0 (Voltar)
+
+Resultado esperado:
+  ✅ Opção 1 mostra todos os horários
+  ✅ Opção 0 volta corretamente
+
+
+⚫ FLUXO 7: PASS
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 2 (Pass)
+  2. Enviar: 1 (Wellhub) OU 2 (TotalPass)
+  3. Deve transferir para atendente
+
+Resultado esperado:
+  ✅ Opção 1 e 2 aceitam
+  ✅ Transfere para atendente
+  ✅ Volta ao menu depois
+
+
+⚪ FLUXO 8: FALAR COM ATENDENTE
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 3 (Falar com Atendente)
+  2. Enviar: 1 (Confirmar)
+
+Resultado esperado:
+  ✅ Opção 1 confirma
+  ✅ Entra na fila para atendimento
+
+
+🟨 FLUXO 9: INFORMAÇÕES
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 4 (Informações)
+  2. Enviar: 1 (Falar com atendente)
+
+Resultado esperado:
+  ✅ Opção 1 funciona
+  ✅ Transfere para atendente
+
+
+🟦 FLUXO 10: FEEDBACK
+═══════════════════════════════════════════════════════════════
+Passos:
+  1. Menu: 5 (Feedback)
+  2. Enviar: 1 (Avaliar - 1-5 estrelas)
+  3. Enviar: 4 (4 estrelas)
+
+Resultado esperado:
+  ✅ Opção 1 funciona
+  ✅ Aceita números 1-5
+  ✅ Volta ao menu
+
+
+═══════════════════════════════════════════════════════════════
+📋 CHECKLIST DE TESTES IMPLEMENTADOS
+═══════════════════════════════════════════════════════════════
+
+✅ CORREÇÕES APLICADAS:
+  ✅ Fluxo valores_mensais aceita agora 1-9 quando sem modalidade
+  ✅ Fluxo valores_diarios aceita agora 1-9 quando sem modalidade
+  ✅ Removido case duplicado "assistancia" (erro de digitação)
+
+⚠️  FLUXOS QUE PRECISAM DE TESTES:
+  [ ] Fluxo 1: Valores → Diária → 5 (CRÍTICO)
+  [ ] Fluxo 2: Valores → Mensal → 3 (CRÍTICO)
+  [ ] Fluxo 3: Valores → Planos
+  [ ] Fluxo 4: Valores → Pacotes
+  [ ] Fluxo 5: Modalidades direto
+  [ ] Fluxo 6: Horários
+  [ ] Fluxo 7: Pass
+  [ ] Fluxo 8: Atendente
+  [ ] Fluxo 9: Informações
+  [ ] Fluxo 10: Feedback
+
+═══════════════════════════════════════════════════════════════
+🔍 COMO TESTAR
+═══════════════════════════════════════════════════════════════
+
+1. Conecte o bot com: node .sys/bot-simple.js
+2. Escaneie o QR code com o WhatsApp
+3. Envie mensagens seguindo os fluxos acima
+4. Verifique se não há mensagens de erro de "opção inválida"
+5. Verifique se os dados são salvos corretamente
+
+═══════════════════════════════════════════════════════════════

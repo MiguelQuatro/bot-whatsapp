@@ -1,0 +1,396 @@
+═══════════════════════════════════════════════════════════════════════════════
+✅ SISTEMA DE CONSULTA CONSOLIDADO - Bot Seven7Fit
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 O QUE MUDOU:
+
+ANTES (problema):
+├─ test-normalizacao.js          ❌ Removido
+├─ relatorio-antes-depois.js     ❌ Removido
+├─ verificacao-final.js          ❌ Removido
+├─ VERIFICACAO-*.md              ❌ Removido
+├─ SUMARIO-VERIFICACAO.txt       ❌ Removido
+└─ verificacao-numero-*.txt      ❌ Removido
+   Resultado: 6 arquivos poluindo o bot
+
+DEPOIS (solução):
+├─ .checklist.json               ✅ Arquivo único de referência
+└─ README.md                     ✅ Guia rápido de uso
+   Resultado: 2 arquivos compactos e reutilizáveis
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📋 COMO USAR O NOVO SISTEMA
+═══════════════════════════════════════════════════════════════════════════════
+
+1. VER TODAS AS VERIFICAÇÕES:
+   Get-Content .checklist.json | ConvertFrom-Json
+
+2. VER APENAS A CONCLUSÃO:
+   Get-Content .checklist.json | ConvertFrom-Json | Select -ExpandProperty conclusao
+
+3. VER FORMATOS DE NÚMERO ACEITOS:
+   Get-Content .checklist.json | ConvertFrom-Json | 
+   Select -ExpandProperty verificacoes_realizadas | 
+   Select -ExpandProperty detalhes | 
+   Select -ExpandProperty formatos_numero
+
+4. VER FLUXO DO CLIENTE:
+   Get-Content .checklist.json | ConvertFrom-Json | 
+   Select -ExpandProperty fluxo_cliente
+
+5. VER COMANDOS ÚTEIS:
+   Get-Content .checklist.json | ConvertFrom-Json | 
+   Select -ExpandProperty comandos_uteis
+
+6. VER ÚLTIMAS ALTERAÇÕES:
+   Get-Content .checklist.json | ConvertFrom-Json | 
+   Select -ExpandProperty alteracoes_recentes
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ DADOS CONSOLIDADOS NO .checklist.json
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 SEÇÕES DISPONÍVEIS:
+├─ projeto                       → Nome e versão
+├─ alteracoes_recentes           → O que foi mudado
+├─ verificacoes_realizadas       → Testes feitos
+│  ├─ formatos_numero            → 5 formatos testados ✅
+│  └─ compatibilidade_antes_depois → 80% → 100%
+├─ fluxo_cliente                 → 7 etapas do cliente
+├─ comandos_uteis                → Todos os comandos
+├─ validacoes_seguranca          → Segurança mantida
+├─ kpis_monitorados              → KPIs disponíveis
+├─ problemas_conhecidos          → Lista vazia ✅
+├─ proximas_melhorias            → Futuras atualizações
+├─ como_usar_este_arquivo        → Instruções
+└─ conclusao                     → Status final ✅
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 DADOS GUARDADOS NO CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ NÚMERO ACEITO: 100% compatibilidade (5/5 formatos)
+   • 13991009209           (11 dígitos, sem 55)
+   • 5513991009209         (13 dígitos, com 55 + 9)
+   • 5513991009209@c.us    (com @c.us)
+   • 551399102920          (12 dígitos - NOVO!)
+   • 13996817481           (Admin)
+
+✅ CLIENTE LIBERADO: Funciona normalmente
+   • Comando: liberar 5513991009209
+   • Histórico registrado
+   • KPIs atualizados
+
+✅ SEM REGRESSÕES: Todos os casos anteriores funcionam
+   • Validações de segurança mantidas
+   • Bloqueios e limites funcionam
+   • Horários de expediente respeitados
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 BENEFÍCIOS DO NOVO SISTEMA
+═══════════════════════════════════════════════════════════════════════════════
+
+ANTES: 6 arquivos
+├─ Poluição do diretório
+├─ Difícil de manter
+├─ Formato inconsistente
+└─ Sem estrutura de consulta
+
+DEPOIS: 1 arquivo (+ README.md)
+├─ Diretório limpo
+├─ Fácil de manter
+├─ Formato estruturado (JSON)
+├─ Consultas rápidas e diretas
+└─ Reutilizável para novos testes
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 COMO ATUALIZAR O CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+Quando fizer mudanças significativas:
+
+1. Abra .checklist.json
+2. Atualize a seção relevante:
+   - alteracoes_recentes    (mudanças no código)
+   - verificacoes_realizadas (novos testes)
+   - fluxo_cliente          (se mudar o fluxo)
+   - proximas_melhorias     (novas ideias)
+3. Mantenha o arquivo compacto e organizado
+4. Sempre em formato JSON válido
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✨ RESULTADO FINAL
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 ESTRUTURA LIMPA:
+   .sys/
+   ├─ bot-simple.js         (Bot principal)
+   ├─ .checklist.json       (Referência de verificações) ✨ NOVO
+   ├─ README.md             (Guia rápido) ✨ NOVO
+   ├─ start.js              (Inicializador)
+   ├─ package.json          (Dependências)
+   └─ ... (arquivos de configuração)
+
+📊 STATUS:
+   ✅ Número aceito: SIM
+   ✅ Cliente liberado: SIM
+   ✅ Sem poluição: SIM
+   ✅ Consultável: SIM
+   ✅ Pronto para produção: SIM
+
+
+═══════════════════════════════════════════════════════════════════════════════
+MELHORIAS IMPLEMENTADAS:
+───────────────────────────────────────────────────────────────────────────────
+1. Validação de entrada reforçada nos estados de nome, modalidade, feedback e opções numéricas.
+2. Limpeza periódica de memória para Maps como `lastReply` e `messageTimestamps`.
+3. Proteções adicionais para a fila de atendimento e carga de mensagens.
+4. Privacidade reforçada no histórico persistido:
+   - Máscara aplicada em `historico_atendimentos.json`.
+   - Não há máscara nas mensagens do WhatsApp nem no atendimento humano.
+5. Fluxos e estado do bot documentados no `SISTEMA-CONSOLIDADO.txt`.
+
+✨ NOTA SOBRE MASCARA DE DADOS:
+- A máscara agora é aplicada apenas ao histórico salvo em disco (`historico_atendimentos.json`).
+- O atendimento e as mensagens WhatsApp continuam intactos.
+- O histórico de atendimento fica menos exposto sem afetar a operação do bot.
+
+═══════════════════════════════════════════════════════════════════════════════
+Arquivo gerado: 2026-05-07
+Sistema consolidado: .checklist.json + README.md
+═══════════════════════════════════════════════════════════════════════════════
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🤖 INSTRUÇÕES DE CONTEXTO DO BOT - Sugestões de Melhora e Permissões
+═══════════════════════════════════════════════════════════════════════════════
+
+Data de Atualização: 2026-06-03
+
+OBJETIVO:
+Centralizar todas as sugestões de melhora, contexto de funcionamento e regras
+de permissão que o bot deve seguir. Este arquivo serve como referência para o
+desenvolvimento, manutenção e futuras implementações.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📋 ALTERAÇÕES AUTORIZADAS - PASSO 5A/5B
+═══════════════════════════════════════════════════════════════════════════════
+
+TAREFA: Implementar lock por JID no processamento de mensagens
+
+EXECUÇÃO EXATA:
+
+PASSO 5A - Remover função interna handleIncoming:
+├─ Localização: Dentro da função startBot() (linha ~1753)
+├─ Ação: Deletar COMPLETAMENTE a função handleIncoming interna
+├─ Motivo: Evitar duplicação com handleIncoming global (linha 1207)
+└─ Status: ⏳ PENDENTE
+
+PASSO 5B - Atualizar o listener com processWithLock:
+├─ Localização: client.on('message', handleIncoming); (linha 2520)
+├─ Modificação original:
+│  └─ client.on('message', handleIncoming);
+├─ Modificação REQUERIDA:
+│  └─ client.on('message', (message) => {
+│       const jid = message.from || message.author;
+│       processWithLock(jid, () => handleIncoming(message));
+│     });
+├─ Motivo: Garante execução sequencial por JID, evita race conditions
+└─ Status: ⏳ PENDENTE
+
+OBSERVAÇÕES CRÍTICAS:
+• O usuário pediu especificamente: "faça exatamente o que eu te pedi"
+• Instrução armazenada em user_instructions.md para referência futura
+• Esta implementação é crítica para evitar processamento paralelo de mensagens
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ O QUE O BOT PODE FAZER - PERMISSÕES
+═══════════════════════════════════════════════════════════════════════════════
+
+FUNCIONALIDADES AUTORIZADAS:
+
+1. GERENCIAMENTO DE USUÁRIOS:
+   ✅ Coletar nome, modalidade e informações de atendimento
+   ✅ Armazenar histórico de atendimento em arquivo
+   ✅ Normalizar números telefônicos (11 a 13 dígitos)
+   ✅ Mascarar dados sensíveis no histórico (apenas arquivo)
+   ✅ Detectar inatividade e solicitar confirmação (5 min)
+
+2. ATENDIMENTO HUMANO:
+   ✅ Manter fila de solicitações com prioridades
+   ✅ Pausar bot quando cliente está em atendimento
+   ✅ Suportar timeout automático após 30 minutos
+   ✅ Liberar cliente manualmente via comando admin
+
+3. MONITORAMENTO:
+   ✅ Registrar KPIs (atendimentos, mensagens, feedback)
+   ✅ Calcular tempo médio de atendimento
+   ✅ Salvar KPIs em arquivo JSON a cada hora
+   ✅ Identificar horário de pico de mensagens
+
+4. CONTROLE DE SEGURANÇA:
+   ✅ Validar limite de mensagens por hora (30 mensagens/hora)
+   ✅ Implementar cooldown entre respostas (3 segundos)
+   ✅ Bloquear contatos específicos (blacklist)
+   ✅ Respeitar horário de expediente (seg-sex 6-22h, sábado 8-13h)
+   ✅ Validar entrada de usuários (nome, modalidade)
+
+5. LÓGICA DE ATENDIMENTO:
+   ✅ Apresentar menu com 5 opções principais
+   ✅ Listar modalidades com horários e valores
+   ✅ Processar solicitações de pass (check-in)
+   ✅ Coletar feedback e reportar problemas
+   ✅ Rotear para atendente quando necessário
+
+6. ADMINISTRAÇÃO:
+   ✅ Executar comandos admin (liberar, fila status, kpi, etc)
+   ✅ Gerenciar blacklist de contatos
+   ✅ Forçar expediente (forçarExpediente)
+   ✅ Rotacionar logs (máx 200MB por arquivo)
+   ✅ Limpar memória de forma agressiva (5min)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+❌ O QUE O BOT NÃO PODE FAZER - RESTRIÇÕES
+═══════════════════════════════════════════════════════════════════════════════
+
+FUNCIONALIDADES PROIBIDAS:
+
+1. PRIVACIDADE:
+   ❌ Enviar dados completos de contato para terceiros
+   ❌ Armazenar números sem máscara no histórico em disco
+   ❌ Compartilhar conversas sem consentimento
+   ❌ Processar mensagens de grupos sem autorização admin
+
+2. PROCESSAMENTO:
+   ❌ Executar múltiplas operações simultâneas para o mesmo JID
+   ❌ Armazenar mensagens em memória indefinidamente
+   ❌ Manter estados por mais de 24 horas
+   ❌ Ignorar erros de envio sem logging
+
+3. AUTENTICAÇÃO:
+   ❌ Aceitar comandos admin de números não registrados
+   ❌ Permitir liberar múltiplos clientes no mesmo comando
+   ❌ Desabilitar validação de horário sem log
+   ❌ Remover cliente da blacklist sem confirmação
+
+4. DADOS:
+   ❌ Limpar histórico sem backup
+   ❌ Salvar senhas ou tokens em arquivo
+   ❌ Modificar KPIs manualmente sem evento de log
+   ❌ Resetar fila sem notificar atendente
+
+5. OPERAÇÃO:
+   ❌ Enviar mais de 30 mensagens por hora para mesmo cliente
+   ❌ Responder a cliente em atendimento humano (mudo automático)
+   ❌ Processar comandos sem verificar staff (admin/atendente)
+   ❌ Manter sessão aberta após erro crítico
+
+
+═══════════════════════════════════════════════════════════════════════════════
+💡 SUGESTÕES DE MELHORA FUTURAS
+═══════════════════════════════════════════════════════════════════════════════
+
+CURTO PRAZO (1-2 semanas):
+├─ Implementar processWithLock por JID (PASSO 5A/5B)
+├─ Adicionar validação de email para feedback
+├─ Implementar sistema de ratings para atendentes
+└─ Criar dashboard simples de KPIs em tempo real
+
+MÉDIO PRAZO (1 mês):
+├─ Migrar histórico para banco de dados (SQLite/PostgreSQL)
+├─ Implementar autoscaling para múltiplas instâncias
+├─ Adicionar suporte a agendamento de atendimento
+├─ Criar relatório mensal de atendimento
+└─ Implementar busca no histórico de conversa
+
+LONGO PRAZO (2-3 meses):
+├─ Integração com CRM externo
+├─ Machine Learning para classificação de sentimento
+├─ Suporte a múltiplos idiomas
+├─ API REST para consultas externas
+└─ Dashboard administrativo web
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🔐 VALIDAÇÕES OBRIGATÓRIAS NO CÓDIGO
+═══════════════════════════════════════════════════════════════════════════════
+
+VALIDAR SEMPRE:
+
+1. Entrada de Usuário:
+   ✓ isGroupMsg (ignorar grupos)
+   ✓ jid válido e normalizado
+   ✓ texto não vazio
+   ✓ message.body sem caracteres inválidos
+
+2. Segurança:
+   ✓ isStaff antes de executar comandos admin
+   ✓ Estado do atendimento antes de responder
+   ✓ Blacklist antes de processar
+   ✓ Limite de mensagens por hora
+
+3. Dados:
+   ✓ Histórico persistido com máscara
+   ✓ KPIs salvos regularmente
+   ✓ Fila serializada em arquivo
+   ✓ Logs com timestamp
+
+4. Estados:
+   ✓ Cleanup automático após expiração
+   ✓ Timer de inatividade funcional
+   ✓ Timeout de atendimento (30min)
+   ✓ ProcessingLocks por JID
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 ESTRUTURA DE DADOS CRÍTICA
+═══════════════════════════════════════════════════════════════════════════════
+
+MAPAS GLOBAIS (em memória):
+├─ estados                      → Estado atual de cada cliente
+├─ stateData                    → Dados contextuais por cliente
+├─ emAtendimentoHumano          → Clientes em atendimento
+├─ clientesEmFila               → Clientes aguardando atendimento
+├─ clientesPausados             → Clientes com bot desligado
+├─ messageTimestamps            → Controle de limite de msg
+├─ lastReply                    → Cooldown entre respostas
+├─ timers                       → Expiração de estado (24h)
+├─ inactivityTimers             → Inatividade (5-6 min)
+└─ timeoutAtendimentoTimers     → Timeout atendimento (30min)
+
+ARQUIVOS PERSISTIDOS:
+├─ kpis.json                    → KPIs consolidados
+├─ blacklist.json               → Contatos bloqueados
+├─ fila.json                    → Fila de atendimento
+├─ historico_atendimentos.json  → Histórico (com máscara)
+├─ bot.log                      → Log de eventos
+└─ qrcode.png                   → Código QR para login
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 CHECKLIST PARA NOVAS ALTERAÇÕES
+═══════════════════════════════════════════════════════════════════════════════
+
+Antes de fazer QUALQUER alteração no código:
+
+□ Ler esta seção completamente
+□ Verificar se a alteração respeita as restrições (❌)
+□ Confirmar que usa as permissões (✅)
+□ Validar entrada de dados conforme seção 🔐
+□ Implementar logging para rastreamento
+□ Testar em modo TEST_MODE antes
+□ Documentar mudança neste arquivo
+□ Notificar atendentes se afeta operação
+□ Fazer backup antes de deploy
+
+
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,11 @@
+.env
+.wwebjs_auth/
+*.log
+fila.json
+kpis.json
+blacklist.json
+historico_atendimentos.json
+node_modules/
+#    - package.json       (dependências)
+#    - Baileys/           (dependência do WhatsApp)
+# ════════════════════════════════════════════════════════════════
