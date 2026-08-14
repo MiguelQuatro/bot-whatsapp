@@ -500,6 +500,6 @@ Se este projeto foi útil para você, considere deixar uma ⭐ no repositório! 
 
 ---
 
-**Desenvolvido com ❤️ para automação profissional no WhatsApp**
+**Desenvolvido com cuidado para automação profissional no WhatsApp**
 
 *Última atualização: 2026*
