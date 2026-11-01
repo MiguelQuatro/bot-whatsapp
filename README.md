@@ -1,197 +1,187 @@
 # 🍕 Bot WhatsApp - Sistema Inteligente de Automação
 
-Um projeto completo de **automação de atendimento no WhatsApp** desenvolvido para pequenas e médias empresas. Combina menus interativos, sistema de fila inteligente, análise de KPIs e gerenciamento robusto de clientes para oferecer uma experiência profissional e escalável.
+Um projeto de automação de atendimento para WhatsApp pensado para negócios que precisam responder clientes rapidamente, reduzir filas e manter o atendimento humano quando necessário. O sistema resolve o problema de atendimento inconsistente, altos tempos de espera e quedas de disponibilidade ao combinar bot automatizado, fila inteligente e failover entre duas tecnologias.
 
-> **Ideal para:** Pizzarias, restaurantes, e-commerce, serviços de delivery e qualquer negócio que necessite atendimento 24/7 automatizado com suporte a atendentes humanos.
-
----
-
-## ✨ Por que usar este Bot?
-
-- 🎯 **Atendimento Profissional** - Menus estruturados e fluxos otimizados
-- ⚡ **Escalável** - Gerencie múltiplos clientes simultaneamente
-- 📊 **Data-Driven** - Acompanhe métricas e tome decisões baseadas em dados
-- 🔗 **Integração Humana** - Transfira para atendentes reais quando necessário
-- 🛡️ **Confiável** - Reconexão automática e persistência de dados
-- 💰 **Gratuito** - Código aberto sob licença MIT
+> O bot consegue atender clientes 24/7, priorizar pedidos e dúvidas urgentes, notificar atendentes em tempo real e continuar funcionando mesmo se uma das integrações falhar.
 
 ---
 
-## 🎯 Características Principais
+## 🧩 Problema que o sistema resolve
 
-### Sistema de Atendimento
-- **Menus Interativos** - Navegação intuitiva com submenus e fluxos personalizáveis
-- **Fila de Prioridades** - Ordena atendimentos por tipo e tempo de espera
-- **Atendimento Humano** - Integração seamless com atendentes reais
-- **Auto-liberação** - Timeout automático após 30 minutos
-- **Histórico Completo** - Registro de todos os atendimentos
+Muitas empresas perdem clientes porque o atendimento é lento, manual e pouco escalável. Em pizzerias, restaurantes, e-commerce e serviços de suporte, mensagens acumulam, o cliente abandona o chat e a operação fica dependente de uma pessoa para responder tudo.
 
-### Análise e Inteligência
-- **KPIs em Tempo Real** - Acompanhe atendimentos iniciados, comprovantes, check-ins
-- **Métricas de Performance** - Tempo médio de atendimento, horário de pico
-- **Relatórios Automáticos** - Gere dados para análise gerencial
-- **Persistência de Dados** - Recupere dados mesmo após reinicializações
-
-### Segurança e Controle
-- **Blacklist Inteligente** - Bloqueie números problemáticos
-- **Rate Limiting** - Proteção contra spam e bloqueios do WhatsApp
-- **Logs Detalhados** - Rastreabilidade completa com dados sensíveis mascarados
-- **Modo Admin** - Comandos exclusivos para gerentes
+Este projeto elimina esse gargalo com atendimento automatizado, fila ordenada por prioridade, resposta rápida e transferência inteligente para humanos quando a situação exige.
 
 ---
 
-## 🚀 Início Rápido
+## 🔄 Fluxo do sistema
+
+```text
+Cliente no WhatsApp
+        │
+        ▼
+   Bot 1 (whatsapp-web.js)
+        │
+        ├── funciona normalmente
+        │
+        └── falha / timeout / desconexão
+                    │
+                    ▼
+             Bot 2 (Baileys)
+                    │
+                    ├── assume o atendimento
+                    └── mantém fila e estado
+                              │
+                              ▼
+                    Fila inteligente
+                      - prioridade
+                      - tempo de espera
+                      - atendimento humano
+                              │
+                              ▼
+                 Transferência para atendente real
+                              │
+                              ▼
+                  KPIs, histórico e relatórios
+```
+
+### Componentes principais
+- Bot 1: fluxo principal e integração com WhatsApp Web
+- Bot 2: failover automático para continuidade do atendimento
+- Fila inteligente: prioriza casos urgentes e mantém ordem FIFO dentro da prioridade
+- Atendente humano: recebe o cliente quando necessário ou solicitado
+- Monitoramento: KPIs, histórico de atendimentos e logs
+
+---
+
+## ✨ Principais funcionalidades
+
+### Sistema de atendimento
+- Menus interativos com navegação em fluxo estruturado
+- Fila por prioridade e tempo de espera
+- Atendimento humano com transferência eficiente
+- Auto-liberação após timeout configurável
+- Histórico completo de interações
+
+### Inteligência operacional
+- KPIs em tempo real para serviços, comprovantes, check-ins e tempo médio
+- Relatórios úteis para gestão e tomada de decisão
+- Validação de horários de funcionamento e regras de exclusão
+- Persistência de dados para recuperação após reinício
+
+### Segurança e controle
+- Blacklist para números problemáticos
+- Rate limiting para reduzir spam e bloqueios
+- Logs detalhados com mascaramento de dados sensíveis
+- Modo admin para comandos exclusivos de gestão
+
+### Resiliência
+- Reconexão automática
+- Failover entre bots para manter serviço online
+- Backoff exponencial para evitar sobrecarga em falhas repetidas
+- Recuperação de estado após reinicialização
+
+---
+
+## 🚀 Como rodar
 
 ### Requisitos
 
-```
-✓ Node.js 14+ com npm
-✓ Google Chrome (instalado no caminho padrão)
-✓ Conexão à internet estável
+```text
+✓ Node.js 14+
+✓ npm
+✓ Google Chrome instalado no caminho padrão
+✓ Conexão estável com a internet
 ✓ Conta WhatsApp ativa
 ```
 
-### Passos de Instalação
+### Instalação
 
-**1. Clone o repositório**
 ```bash
 git clone https://github.com/MiguelQuatro/bot-whatsapp.git
 cd bot-whatsapp
-```
-
-**2. Instale as dependências**
-```bash
 npm install
 ```
 
-**3. Configure suas credenciais**
+### Configuração básica
 
-Abra `.sys/bot-simple.js` e configure:
+Abra `.sys/bot-simple.js` e configure os contatos do suporte, admins e atendentes:
 
 ```javascript
-// Suas credenciais WhatsApp
-const CONTATO_SUPORTE = new Set(["559XXXXXXXX@c.us"]);    // Seu número
-const ADMIN_JIDS = new Set(["559XXXXXXXX@c.us"]);         // Número do admin
-const ATENDENTE_ATUAL = new Set(["559XXXXXXXX@c.us"]);    // Atendentes
+const CONTATO_SUPORTE = new Set(["559XXXXXXXX@c.us"]);
+const ADMIN_JIDS = new Set(["559XXXXXXXX@c.us"]);
+const ATENDENTE_ATUAL = new Set(["559XXXXXXXX@c.us"]);
 
-// Horários de funcionamento
 const HORARIO_EXPEDIENTE = {
-  inicioSemana: 18,       // 18h segunda a sexta
-  fimSemana: 23,          // 23h segunda a sexta
-  inicioSabado: 17,       // 17h sábado
-  fimSabado: 24           // 00h sábado
+  inicioSemana: 18,
+  fimSemana: 23,
+  inicioSabado: 17,
+  fimSabado: 24
 };
 ```
 
-**4. Inicie o Bot**
+### Iniciar
+
 ```bash
 npm start
 ```
-ou
-Botão Ligar(1/2) dentro da Pasta do Projeto
 
-**5. Autentique no WhatsApp**
+Ou execute os scripts em `Botões/` para ligar o sistema.
 
-- Um **QR Code** será exibido no terminal
-- Abra WhatsApp > **Configurações** > **Aparelhos vinculados** > **Vincular um aparelho**
+### Autenticação
+
+- Um QR Code será exibido no terminal
+- Abra o WhatsApp e vá em `Configurações > Dispositivos vinculados > Vincular um aparelho`
 - Escaneie o código
-- ✅ Bot está pronto!
+- O bot ficará pronto para atender
 
 ---
 
-## 📱 Experiência do Cliente
+## 🏗️ Decisões técnicas
 
-### Menu Principal
-```
-🍕 PIZZARIA EXEMPLO - MENU PRINCIPAL
+### Por que dois bots?
 
-Escolha uma opção:
+O projeto usa dois mecanismos de integração para reduzir riscos de indisponibilidade. O bot principal garante uma experiência sólida em produção, enquanto o backup atua como failover caso a conexão principal falhe ou o cliente fique instável. Isso aumenta a resiliência do atendimento sem exigir reinício manual.
 
-1 - 🍕 Cardápio / Sabores / Preços
-2 - 🎉 Promoções / Combos
-3 - 🗣️ Falar com Atendente
-4 - ℹ️ Informações
-5 - 📝 Feedback
+### Por que backoff exponencial?
 
-Digite 1-5 ou *menu* para voltar
-```
+Em cenários de reconexão, tentativas consecutivas imediatas podem saturar a conexão, gerar bloqueios e piorar a falha. O backoff exponencial aumenta gradualmente o tempo entre tentativas, reduzindo pressão sobre o serviço e aumentando a chance de estabilidade.
 
-### Fluxo de Atendimento
+### Por que fila inteligente?
 
-```
-Cliente inicia conversa
-         ↓
-    Menu Principal
-         ↓
-Escolhe: Falar com Atendente
-         ↓
-Sistema valida horário
-         ↓
-Solicita nome (se necessário)
-         ↓
-Entra na fila com prioridade
-         ↓
-Atendente notificado
-         ↓
-Conectado ao atendente real
-         ↓
-Comando "liberar" → Atendimento finalizado com KPIs
-```
+Mensagens de clientes não devem ser tratadas como uma lista genérica. O sistema organiza a fila por urgência, tipo de solicitação e tempo de espera, garantindo que clientes com problema crítico ou atendimento prioritário não sejam ignorados.
+
+### Por que transferência para humano?
+
+Automação resolve grande parte do volume, mas situações delicadas exigem atendimento real. Quando o cliente exige ajuda humana, o bot encaminha de forma organizada e registra o contexto para manter continuidade.
 
 ---
 
-## 🎛️ Painel de Controle (Comandos Admin)
+## 📸 Demonstração
 
-### Gerenciamento de Atendimento
-```bash
-liberar                 # Libera o cliente mais antigo em atendimento
-liberar 13999887766     # Libera cliente específico
-pausar 13999887766      # Pausa o bot para um cliente (bot fica silencioso)
-fila status             # Lista todos os clientes aguardando
-fila                    # Mostra sua posição (para clientes na fila)
+Abaixo está um espaço para mostrar a experiência do usuário em execução. Adicione prints ou um GIF real na pasta `docs/` e ajuste os caminhos abaixo.
+
+```markdown
+![Menu principal do bot](docs/assets/menu-principal.png)
+![Fluxo de atendimento em execução](docs/assets/atendimento.gif)
+![Dashboard de KPIs](docs/assets/kpi-status.png)
 ```
 
-### Análise e Relatórios
-```bash
-kpi status              # Exibe relatório completo:
-                        # - Atendimentos iniciados
-                        # - Comprovantes recebidos
-                        # - Check-ins de pass
-                        # - Tempo médio de atendimento
-                        # - Horário de pico
-
-kpi limpar              # Reseta todos os KPIs
-historico               # Últimos 5 atendimentos com duração
-```
-
-### Gerenciamento de Contatos
-```bash
-bloquear 13999887766    # Adiciona à blacklist
-desbloquear 13999887766 # Remove da blacklist
-blacklist               # Lista todos os números bloqueados
-```
-
-### Configurações do Sistema
-```bash
-limite on               # Ativa limite de mensagens por hora
-limite off              # Desativa limite
-limite status           # Mostra se está ativo
-expediente on           # Força aceitar atendimentos 24/7
-expediente off          # Volta a respeitar horário
-silencioso              # Reduz logs no terminal (mais limpo)
-normal                  # Restaura logs normais
-status                  # Exibe situação atual completa
-comandos                # Lista todos os comandos
-desligar                # Encerra o bot de forma segura
-```
+Exemplo de comportamento esperado:
+- cliente entra no menu
+- escolhe opção de atendimento
+- bot valida horário
+- coloca na fila
+- notifica atendente
+- segue para atendimento ou fallback
 
 ---
 
-## 📊 Dashboard de Métricas
+## 📊 Dashboard de métricas
 
-Quando você digita `kpi status`, recebe um relatório como este:
+Ao consultar `kpi status`, o sistema expõe um resumo como este:
 
-```
+```text
 👥 Atendimentos iniciados: 45
 💰 Comprovantes recebidos: 12
 🟠 Check-ins de Pass: 8
@@ -202,286 +192,197 @@ Quando você digita `kpi status`, recebe um relatório como este:
 ⏰ Horário de pico: 20:00 (89 mensagens)
 ```
 
-Estes dados ajudam a:
-- Identificar horários críticos
-- Planejar melhor a equipe
-- Medir satisfação do cliente
-- Otimizar processos
+Esses dados ajudam a:
+- identificar horários críticos
+- medir tempo de resposta
+- acompanhar produtividade
+- melhorar o processo de atendimento
 
 ---
 
-## 🗂️ Arquitetura do Projeto
+## 🗂️ Arquitetura do projeto
 
-```
+```text
 bot-whatsapp/
 │
 ├── .sys/
-│   ├── bot-simple.js                    # Core do bot (1.700+ linhas)
-│   ├── package.json                     # Dependências
-│   ├── qrcode.png                       # QR Code gerado
-│   ├── bot.log                          # Logs de operação
-│   │
-│   └── Dados Persistidos:
-│       ├── kpis.json                    # Métricas acumuladas
-│       ├── fila.json                    # Fila ativa
-│       ├── blacklist.json               # Contatos bloqueados
-│       └── historico_atendimentos.json  # Registro histórico
+│   ├── bot-simple.js
+│   ├── package.json
+│   ├── qrcode.png
+│   ├── bot.log
+│   └── Dados Persistidos/
+│       ├── kpis.json
+│       ├── fila.json
+│       ├── blacklist.json
+│       └── historico_atendimentos.json
 │
-├── Botões/                              # Scripts de inicialização
-│   ├── LIGAR-1.bat                     # Bot WhatsApp-Web
-│   └── LIGAR-2.bat                     # Bot Baileys (backup)
+├── Botões/
+│   ├── LIGAR-1.bat
+│   └── LIGAR-2.bat
 │
-├── ATUALIZAR.bat                        # Script de atualização
+├── ATUALIZAR.bat
 ├── .gitignore
-└── README.md                            # Documentação
+├── README.md
+└── LICENSE
 ```
 
 ---
 
-## ⚙️ Configurações Recomendadas
+## 🎛️ Painel de controle (comandos admin)
 
-### Para Pizzaria / Restaurante
-```javascript
-const HORARIO_EXPEDIENTE = {
-  inicioSemana: 11,       // 11h segunda a sexta
-  fimSemana: 23,          // 23h segunda a sexta
-  inicioSabado: 11,       // 11h sábado
-  fimSabado: 24           // 00h sábado
-};
-
-const LIMITE_MENSAGENS_POR_HORA = 50;  // Generoso para vendas
-const TIMEOUT_ATENDIMENTO = 30 * 60 * 1000;  // 30 min é ok
-```
-
-### Para Suporte / Service
-```javascript
-const HORARIO_EXPEDIENTE = {
-  inicioSemana: 9,        // 9h segunda a sexta
-  fimSemana: 18,          // 18h segunda a sexta
-  inicioSabado: 0,        // Fechado sábado
-  fimSabado: 0
-};
-
-const LIMITE_MENSAGENS_POR_HORA = 30;  // Mais restritivo
-const TIMEOUT_ATENDIMENTO = 45 * 60 * 1000;  // 45 min para suporte
-```
-
-### Para E-commerce
-```javascript
-const HORARIO_EXPEDIENTE = {
-  inicioSemana: 0,        // 24/7 segunda a sexta
-  fimSemana: 24,
-  inicioSabado: 0,        // 24/7 sábado
-  fimSabado: 24
-};
-
-const LIMITE_MENSAGENS_POR_HORA = 100; // Alto volume esperado
+```bash
+liberar                 # Libera o cliente mais antigo em atendimento
+liberar 13999887766     # Libera cliente específico
+pausar 13999887766      # Pausa o bot para um cliente
+fila status             # Lista todos os clientes aguardando
+fila                    # Mostra a posição do cliente
+kpi status              # Exibe métricas e KPIs
+kpi limpar              # Reseta os KPIs
+historico               # Últimos atendimentos
+bloquear 13999887766    # Bloqueia um contato
+blacklist               # Lista contatos bloqueados
+limite on               # Ativa limite de mensagens por hora
+limite off              # Desativa o limite
+status                  # Exibe situação atual do sistema
+comandos                # Lista os comandos disponíveis
+silencioso              # Reduz logs no terminal
+normal                  # Restaura logs normais
+desligar                # Encerra o bot com segurança
 ```
 
 ---
 
-## 🔄 Sistema de Prioridades
+## 🛡️ Recursos de segurança
 
-A fila é inteligente e ordena por **tipo de solicitação**:
+### Proteção de dados
+- Logs com mascaramento dos últimos dígitos
+- `LOG_MENSAGENS = false` em produção
+- Limpeza automática de dados expirados
 
-| Tipo | Prioridade | Exemplo |
-|------|-----------|---------|
-| 🏦 Comprovante | **0 (Alta)** | Cliente precisa comprovar pagamento |
-| 💳 Pagamento | **0 (Alta)** | Problemas com transação |
-| 🎟️ Pass/Check-in | **1 (Média)** | Validação de ingresso |
-| 📞 Atendimento | **2 (Baixa)** | Dúvidas gerais |
-
-Dentro de cada prioridade, a ordem é **FIFO** (quem chegou primeiro é atendido primeiro).
-
----
-
-## 🛡️ Recursos de Segurança
-
-### Proteção de Dados
-- ✅ **Mascaramento** - Logs mostram apenas 4 últimos dígitos (ex: `****7766`)
-- ✅ **Produção Safe** - `LOG_MENSAGENS = false` em produção
-- ✅ **Limpeza Automática** - Dados expirados removidos a cada 5 minutos
-
-### Rate Limiting
-- ✅ **Cooldown entre Respostas** - 3 segundos padrão evita bloqueios
-- ✅ **Limite por Hora** - Máximo 30 mensagens/hora (configurável)
-- ✅ **Proteção Inteligente** - Admin/suporte não sofrem limitações
+### Rate limiting
+- Cooldown de 3 segundos entre respostas
+- Limite configurável por hora
+- Exceções para admin e suporte
 
 ### Validação
-- ✅ **Normalização de JID** - Converte automaticamente formatos
-- ✅ **Verificação de Grupo** - Ignora mensagens de grupos
-- ✅ **Blocklist** - Números podem ser bloqueados manualmente
+- Normalização automática de JID
+- Ignora mensagens de grupos
+- Blacklist manual
 
 ---
 
 ## 🐛 Troubleshooting
 
-### "No LID for user" Error
-**Causa:** Formato de JID inválido  
-**Solução:** Bot tenta 3 fallbacks automáticos. Se persistir:
+### "No LID for user"
+**Causa:** formato de JID inválido  
+**Solução:** execute a limpeza e reinicie o bot.
+
 ```bash
-# Execute o script de limpeza
 LIMPAR_PASTAS.bat
-# Reinicie o bot
 npm start
 ```
 
-### Bot não reconecta após desconexão
-**Causa:** Limite de 5 reconexões atingido  
-**Solução:** Use bot Baileys como backup:
+### Bot não reconecta
+**Causa:** limite de reconexões atingido  
+**Solução:** use o backup Baileys.
+
 ```bash
-# Na pasta Botões/
+cd Botões
 LIGAR-2.bat
 ```
 
 ### Terminal poluído com logs
-**Solução:** Use modo silencioso
 ```bash
-# No chat com admin
 silencioso
-# Logs continuam em .sys/bot.log
 ```
 
-### Cliente bloqueado por WhatsApp
-**Causa:** Muitas mensagens muito rápido  
-**Solução:** Aumente cooldown ou ative limite
+### WhatsApp bloqueou o cliente
+**Causa:** muitas mensagens em sequência  
+**Solução:** use rate limiting ou aumente o cooldown.
+
 ```bash
-# No terminal
 limite on
 ```
 
 ---
 
-## 📦 Tecnologias Utilizadas
+## 📦 Tecnologias utilizadas
 
 | Tecnologia | Versão | Uso |
 |-----------|--------|-----|
 | **Node.js** | 14+ | Runtime |
-| **whatsapp-web.js** | 1.23.0 | Integração WhatsApp |
-| **baileys** | 7.0.0-rc.9 | Backup (API alternativa) |
-| **puppeteer** | 24.38.0 | Automação navegador |
-| **qrcode** | 1.5.4 | Geração QR Code |
+| **whatsapp-web.js** | 1.23.0 | Integração principal |
+| **baileys** | 7.0.0-rc.9 | Backup e failover |
+| **puppeteer** | 24.38.0 | Automação do navegador |
+| **qrcode** | 1.5.4 | Geração do QR Code |
 
 ---
 
-## 💡 Boas Práticas
+## 💡 Boas práticas
 
-### Em Desenvolvimento
+### Em desenvolvimento
 ```javascript
-// Use o teste mode
 enableTestMode();
-getTestMessages(); // Valida respostas sem enviar
+getTestMessages();
 ```
 
-### Em Produção
+### Em produção
 ```javascript
-// Desative logs de mensagens
 const LOG_MENSAGENS = false;
-
-// Ative limite de mensagens
-// (já está ativo por padrão)
 ```
 
-### Backup Regular
+### Backup regular
 ```bash
-# Faça backup destes arquivos
-- .sys/kpis.json
-- .sys/historico_atendimentos.json
-- .sys/fila.json
-```
-
-### Monitoramento
-```bash
-# Verifique status regularmente
-status
-
-# Gere relatórios
-kpi status
-historico
-fila status
+cp .sys/kpis.json ./backup/kpis.json
+cp .sys/historico_atendimentos.json ./backup/historico_atendimentos.json
+cp .sys/fila.json ./backup/fila.json
 ```
 
 ---
 
-## 🚨 Maintenance
+## 🔄 Roadmap
 
-### Logs muito grandes?
-- Bot rotaciona automaticamente em 200MB
-- Históricos são mantidos com timestamp
-- Limpar manualmente: delete `.sys/bot.log`
-
-### Memória crescendo?
-- Não há vazamento conhecido
-- Limpeza automática a cada 5 minutos
-- Se persistir, reinicie o bot
-
-### Fila travada?
-- Nunca travou, mas se acontecer:
-```bash
-liberar            # Libera cliente
-fila status        # Verifica fila
-desligar           # Reinicia limpo
-npm start
-```
-
----
-
-## 🎓 Aprendendo com o Código
-
-Este projeto é excelente para aprender:
-
-- **Arquitetura Node.js** - Estrutura profissional de bot
-- **Automação WhatsApp** - Integração com whatsapp-web.js
-- **State Management** - Gerenciamento robusto de estado
-- **Rate Limiting** - Proteção contra spam
-- **Data Persistence** - Salvamento e recuperação de dados
-- **Error Handling** - Tratamento profissional de erros
-
----
-
-## 🔮 Roadmap
-
-### V1.1 (Próximo)
+### V1.1
 - [ ] Dashboard web em tempo real
 - [ ] Integração com banco de dados
-- [ ] Exportar relatórios em PDF/Excel
+- [ ] Exportação de relatórios em PDF/Excel
 - [ ] Suporte a múltiplos atendentes simultâneos
 
 ### V1.2
 - [ ] Análise de sentimento de feedback
-- [ ] Integração com gateway de pagamento
+- [ ] Gateway de pagamento
 - [ ] Agendamento automático de atendimentos
-- [ ] API REST para sistemas externos
+- [ ] API REST para integrações externas
 
 ### V2.0
-- [ ] Aplicativo mobile de admin
-- [ ] Machine Learning para recomendações
-- [ ] Suporte a múltiplas contas WhatsApp
+- [ ] App mobile para administração
+- [ ] Machine learning para recomendações
+- [ ] Múltiplas contas WhatsApp
 - [ ] Integração com CRM
 
 ---
 
-## 📞 Suporte e Contribuições
+## 📞 Suporte e contribuições
 
-### Encontrou um Bug?
-Por favor, [abra uma issue](https://github.com/MiguelQuatro/bot-whatsapp/issues) com:
-- Descrição clara do problema
-- Passos para reproduzir
-- Versão do Node.js
-- Screenshot/log se possível
+### Encontrou um bug?
+Abra uma issue descrevendo:
+- problema
+- passos para reproduzir
+- versão do Node.js
+- screenshots ou logs que ajudem a diagnosticar
 
-### Quer Contribuir?
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
+### Quer contribuir?
+1. Faça o fork do projeto
+2. Crie uma branch para sua feature
+3. Commit com sua alteração
+4. Push para o fork
 5. Abra um Pull Request
 
 ---
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+Este projeto está sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
 
 ---
 
@@ -489,14 +390,14 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 
 **Miguel Quatro**
 
-- 🐙 GitHub: [@MiguelQuatro](https://github.com/MiguelQuatro)
-- 📧 Entre em contato para dúvidas sobre implementação
+- GitHub: [@MiguelQuatro](https://github.com/MiguelQuatro)
+- Contato: disponível no perfil do autor para dúvidas de implementação
 
 ---
 
 ## ⭐ Gostou?
 
-Se este projeto foi útil para você, considere deixar uma ⭐ no repositório! Isso ajuda a manter o projeto ativo e motiva novas features.
+Se este projeto foi útil para você, considere deixar uma estrela no repositório para apoiar o projeto e incentivar novas melhorias.
 
 ---
 
