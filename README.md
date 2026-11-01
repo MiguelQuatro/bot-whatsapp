@@ -1,79 +1,83 @@
-# 🍕 Bot WhatsApp - Sistema Inteligente de Automação
+# Bot WhatsApp - atendimento, fila e check-in
 
-Um projeto de automação de atendimento para WhatsApp pensado para negócios que precisam responder clientes rapidamente, reduzir filas e manter o atendimento humano quando necessário. O sistema resolve o problema de atendimento inconsistente, altos tempos de espera e quedas de disponibilidade ao combinar bot automatizado, fila inteligente e failover entre duas tecnologias.
+Sistema de automação para WhatsApp pensado para negócios que precisam responder clientes rapidamente, manter uma fila organizada e reduzir atendimento manual sem perder qualidade no relacionamento.
 
-> O bot consegue atender clientes 24/7, priorizar pedidos e dúvidas urgentes, notificar atendentes em tempo real e continuar funcionando mesmo se uma das integrações falhar.
+Este projeto foi desenhado para cenários como academias, clínicas, consultórios, serviços recorrentes e operação de atendimento com fila, confirmação de dados e liberação de acesso. A estrutura suporta menu interativo, atendimento humano quando necessário, registros de KPIs e recuperação em caso de falha do canal principal.
 
----
-
-## 🧩 Problema que o sistema resolve
-
-Muitas empresas perdem clientes porque o atendimento é lento, manual e pouco escalável. Em pizzerias, restaurantes, e-commerce e serviços de suporte, mensagens acumulam, o cliente abandona o chat e a operação fica dependente de uma pessoa para responder tudo.
-
-Este projeto elimina esse gargalo com atendimento automatizado, fila ordenada por prioridade, resposta rápida e transferência inteligente para humanos quando a situação exige.
+> O objetivo não é apenas mandar mensagens automáticas: é organizar o atendimento, reduzir filas, preservar contexto e deixar a operação mais previsível.
 
 ---
 
-## 🔄 Fluxo do sistema
+## Problema que o sistema resolve
+
+Muitas operações perdem clientes por causa de resposta lenta, fila desorganizada e ausência de acompanhamento em canais de conversa. Em ambientes com demanda recorrente, como academia, check-in, comprovantes e atendimento humano, isso gera atrito e queda de conversão.
+
+Este bot resolve esse gargalo com:
+- menu estruturado para navegação simples no WhatsApp
+- fila por prioridade e tempo de espera
+- transição para atendente humano quando necessário
+- registro de KPI e histórico para gestão
+- controle de bloqueios, logs e regras de segurança
+
+---
+
+## Fluxo do sistema
 
 ```text
 Cliente no WhatsApp
         │
         ▼
-   Bot 1 (whatsapp-web.js)
+   Bot principal (whatsapp-web.js)
         │
         ├── funciona normalmente
-        │
         └── falha / timeout / desconexão
                     │
                     ▼
-             Bot 2 (Baileys)
+             Bot de redundância (Baileys)
                     │
                     ├── assume o atendimento
-                    └── mantém fila e estado
+                    ├── mantém fila e contexto
+                    └── notifica atendente humano
                               │
                               ▼
-                    Fila inteligente
-                      - prioridade
-                      - tempo de espera
-                      - atendimento humano
+                 Fila inteligente + regras de negócio
                               │
                               ▼
-                 Transferência para atendente real
+                 Cliente recebe resposta / liberação / próxima ação
                               │
                               ▼
-                  KPIs, histórico e relatórios
+                    KPIs, histórico e monitoramento
 ```
 
 ### Componentes principais
-- Bot 1: fluxo principal e integração com WhatsApp Web
-- Bot 2: failover automático para continuidade do atendimento
-- Fila inteligente: prioriza casos urgentes e mantém ordem FIFO dentro da prioridade
-- Atendente humano: recebe o cliente quando necessário ou solicitado
-- Monitoramento: KPIs, histórico de atendimentos e logs
+- Bot principal: fluxo principal e integração com WhatsApp Web
+- Bot de backup: fallback para manutenção da operação
+- Fila organizada: prioriza urgência, tempo de espera e contexto
+- Atendente humano: recebe casos sensíveis ou pendentes
+- Monitoramento: KPIs, histórico e logs estruturados
 
 ---
 
-## ✨ Principais funcionalidades
+## Principais funcionalidades
 
-### Sistema de atendimento
+### Atendimento e operação
 - Menus interativos com navegação em fluxo estruturado
 - Fila por prioridade e tempo de espera
 - Atendimento humano com transferência eficiente
 - Auto-liberação após timeout configurável
-- Histórico completo de interações
+- Histórico completo de interações e eventos
 
-### Inteligência operacional
-- KPIs em tempo real para serviços, comprovantes, check-ins e tempo médio
-- Relatórios úteis para gestão e tomada de decisão
-- Validação de horários de funcionamento e regras de exclusão
+### Gestão e acompanhamento
+- KPIs em tempo real de atendimentos, check-ins e geração de comprovantes
+- Relatórios para avaliação de desempenho e pico de demanda
+- Validação de expediente e regras de exclusão
 - Persistência de dados para recuperação após reinício
 
 ### Segurança e controle
 - Blacklist para números problemáticos
-- Rate limiting para reduzir spam e bloqueios
-- Logs detalhados com mascaramento de dados sensíveis
-- Modo admin para comandos exclusivos de gestão
+- Rate limiting para reduzir spam e excesso de mensagens
+- Logs com mascaramento de dados sensíveis
+- Modo admin para comandos específicos de operação
 
 ### Resiliência
 - Reconexão automática
@@ -83,17 +87,19 @@ Cliente no WhatsApp
 
 ---
 
-## 🚀 Como rodar
+## Como rodar
 
 ### Requisitos
 
 ```text
-✓ Node.js 14+
+✓ Node.js 18+ (recomendado: 20+)
 ✓ npm
 ✓ Google Chrome instalado no caminho padrão
 ✓ Conexão estável com a internet
 ✓ Conta WhatsApp ativa
 ```
+
+> Baileys e Puppeteer mais recentes costumam exigir versões mais recentes do Node. Para evitar incompatibilidades, o recomendado é usar Node 18 ou 20.
 
 ### Instalação
 
@@ -105,20 +111,15 @@ npm install
 
 ### Configuração básica
 
-Abra `.sys/bot-simple.js` e configure os contatos do suporte, admins e atendentes:
+Use variáveis de ambiente ou um arquivo de exemplo em vez de editar números diretamente no código do bot. Exemplo:
 
-```javascript
-const CONTATO_SUPORTE = new Set(["559XXXXXXXX@c.us"]);
-const ADMIN_JIDS = new Set(["559XXXXXXXX@c.us"]);
-const ATENDENTE_ATUAL = new Set(["559XXXXXXXX@c.us"]);
-
-const HORARIO_EXPEDIENTE = {
-  inicioSemana: 18,
-  fimSemana: 23,
-  inicioSabado: 17,
-  fimSabado: 24
-};
+```env
+ADMIN_JIDS=5511900000001@c.us
+SUPORTE_JIDS=5511900000001@c.us
+ATENDENTE_JIDS=5511900000001@c.us
 ```
+
+Se o projeto for executado localmente, mantenha dados reais fora do repositório e nunca publique arquivos de sessão ou QR code com conta vinculada.
 
 ### Iniciar
 
@@ -126,7 +127,7 @@ const HORARIO_EXPEDIENTE = {
 npm start
 ```
 
-Ou execute os scripts em `Botões/` para ligar o sistema.
+Ou use os scripts da pasta `Botões` para iniciar o sistema.
 
 ### Autenticação
 
@@ -137,49 +138,56 @@ Ou execute os scripts em `Botões/` para ligar o sistema.
 
 ---
 
-## 🏗️ Decisões técnicas
+## Decisões técnicas
 
 ### Por que dois bots?
 
-O projeto usa dois mecanismos de integração para reduzir riscos de indisponibilidade. O bot principal garante uma experiência sólida em produção, enquanto o backup atua como failover caso a conexão principal falhe ou o cliente fique instável. Isso aumenta a resiliência do atendimento sem exigir reinício manual.
+O projeto usa dois mecanismos de integração para reduzir riscos de indisponibilidade. O bot principal garante uma experiência sólida em produção, enquanto o backup atua como failover caso a conexão principal falhe ou o ambiente fique instável.
 
 ### Por que backoff exponencial?
 
-Em cenários de reconexão, tentativas consecutivas imediatas podem saturar a conexão, gerar bloqueios e piorar a falha. O backoff exponencial aumenta gradualmente o tempo entre tentativas, reduzindo pressão sobre o serviço e aumentando a chance de estabilidade.
+Em cenários de reconexão, tentativas consecutivas imediatas podem saturar a conexão, gerar bloqueios e piorar a falha. O backoff exponencial aumenta gradualmente o tempo entre tentativas, reduzindo sobrecarga e melhorando a estabilidade.
 
 ### Por que fila inteligente?
 
-Mensagens de clientes não devem ser tratadas como uma lista genérica. O sistema organiza a fila por urgência, tipo de solicitação e tempo de espera, garantindo que clientes com problema crítico ou atendimento prioritário não sejam ignorados.
+Mensagens de clientes não devem ser tratadas como uma lista genérica. O sistema organiza a fila por urgência, tipo de solicitação e tempo de espera, garantindo que casos mais relevantes sejam atendidos com prioridade.
 
 ### Por que transferência para humano?
 
-Automação resolve grande parte do volume, mas situações delicadas exigem atendimento real. Quando o cliente exige ajuda humana, o bot encaminha de forma organizada e registra o contexto para manter continuidade.
+Automação resolve grande parte do volume, mas situações delicadas exigem atendimento real. Quando o cliente exige ajuda humana, o bot encaminha de forma organizada e preserva o contexto para que o atendente continue no ponto certo.
 
 ---
 
-## 📸 Demonstração
+## Demonstracao
 
-Abaixo está um espaço para mostrar a experiência do usuário em execução. Adicione prints ou um GIF real na pasta `docs/` e ajuste os caminhos abaixo.
+Abaixo está um exemplo ilustrativo de como a experiência pode aparecer em operação. Os exemplares visuais reais serão adicionados conforme o projeto evoluir.
 
-```markdown
-![Menu principal do bot](docs/assets/menu-principal.png)
-![Fluxo de atendimento em execução](docs/assets/atendimento.gif)
-![Dashboard de KPIs](docs/assets/kpi-status.png)
+```text
+[Menu principal do bot]
+┌──────────────────────────────┐
+│   Atendimento WhatsApp       │
+│                              │
+│  1. Cardápio / Check-in      │
+│  2. Comprovantes            │
+│  3. Falar com atendente     │
+│  4. Informações             │
+│  5. Feedback                │
+└──────────────────────────────┘
 ```
 
 Exemplo de comportamento esperado:
 - cliente entra no menu
-- escolhe opção de atendimento
-- bot valida horário
-- coloca na fila
-- notifica atendente
-- segue para atendimento ou fallback
+- escolhe opção de serviço ou atendimento
+- bot valida regras de negócio
+- coloca usuário em fila ou libera fluxo
+- notifica atendente quando necessário
+- registra atividade em KPI e histórico
 
 ---
 
-## 📊 Dashboard de métricas
+## Dashboard de métricas
 
-Ao consultar `kpi status`, o sistema expõe um resumo como este:
+Ao consultar o KPI, o sistema pode expor um resumo como este. Os valores abaixo são apenas ilustrativos e não representam dados reais de produção.
 
 ```text
 👥 Atendimentos iniciados: 45
@@ -200,21 +208,22 @@ Esses dados ajudam a:
 
 ---
 
-## 🗂️ Arquitetura do projeto
+## Arquitetura do projeto
 
 ```text
 bot-whatsapp/
 │
 ├── .sys/
 │   ├── bot-simple.js
+│   ├── chatbot.js
 │   ├── package.json
-│   ├── qrcode.png
+│   ├── Tutorial.md
 │   ├── bot.log
-│   └── Dados Persistidos/
-│       ├── kpis.json
-│       ├── fila.json
-│       ├── blacklist.json
-│       └── historico_atendimentos.json
+│   ├── qrcode.png
+│   ├── kpis.json
+│   ├── fila.json
+│   ├── blacklist.json
+│   └── historico_atendimentos.json
 │
 ├── Botões/
 │   ├── LIGAR-1.bat
@@ -223,82 +232,93 @@ bot-whatsapp/
 ├── ATUALIZAR.bat
 ├── .gitignore
 ├── README.md
-└── LICENSE
+├── LICENSE
+└── package.json
 ```
 
 ---
 
-## 🎛️ Painel de controle (comandos admin)
+## Painel de controle (comandos admin)
 
 ```bash
-liberar                 # Libera o cliente mais antigo em atendimento
-liberar 13999887766     # Libera cliente específico
-pausar 13999887766      # Pausa o bot para um cliente
-fila status             # Lista todos os clientes aguardando
-fila                    # Mostra a posição do cliente
-kpi status              # Exibe métricas e KPIs
-kpi limpar              # Reseta os KPIs
-historico               # Últimos atendimentos
-bloquear 13999887766    # Bloqueia um contato
-blacklist               # Lista contatos bloqueados
-limite on               # Ativa limite de mensagens por hora
-limite off              # Desativa o limite
-status                  # Exibe situação atual do sistema
-comandos                # Lista os comandos disponíveis
-silencioso              # Reduz logs no terminal
-normal                  # Restaura logs normais
-desligar                # Encerra o bot com segurança
+liberar
+liberar 13999887766
+pausar 13999887766
+fila status
+fila
+kpi status
+kpi limpar
+historico
+bloquear 13999887766
+blacklist
+limite on
+limite off
+status
+comandos
+silencioso
+normal
+desligar
 ```
 
 ---
 
-## 🛡️ Recursos de segurança
+## Segurança e LGPD
 
-### Proteção de dados
-- Logs com mascaramento dos últimos dígitos
-- `LOG_MENSAGENS = false` em produção
-- Limpeza automática de dados expirados
+Este projeto lida com mensagens, atendimentos e, em alguns cenários, dados de clientes. Por isso, vale seguir boas práticas:
 
-### Rate limiting
-- Cooldown de 3 segundos entre respostas
-- Limite configurável por hora
-- Exceções para admin e suporte
+- mantenha arquivos de sessão, QR Code e logs fora do repositório
+- não publique `.env` com números reais ou tokens
+- nunca commite histórico de atendimento com dados pessoais sem mascaramento
+- use arquivos de configuração locais e mantenha os valores sensíveis fora do versionamento
+- revise o `.gitignore` antes de publicar o projeto
 
-### Validação
-- Normalização automática de JID
-- Ignora mensagens de grupos
-- Blacklist manual
+Arquivos que devem permanecer locais ou protegidos:
+- `.sys/bot.log`
+- `.sys/kpis.json`
+- `.sys/historico_atendimentos.json`
+- `.sys/blacklist.json`
+- `.sys/qrcode.png`
+- `.wwebjs_auth/`
+- `.wwebjs_cache/`
+- sessões do WhatsApp / autenticação do cliente
+
+Se algum arquivo sensível já foi enviado ao GitHub, o ideal é:
+1. remover do histórico do repositório
+2. invalidar a sessão atual
+3. gerar nova autenticação
+4. revisar o projeto em busca de dados residuais
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
-### "No LID for user"
-**Causa:** formato de JID inválido  
-**Solução:** execute a limpeza e reinicie o bot.
+### Bot não inicia ou a sessão fica travada
+
+- reinicie o bot
+- remova a pasta de sessão local, se necessário
+- verifique se há conflito no Chrome/WhatsApp Web
 
 ```bash
-LIMPAR_PASTAS.bat
 npm start
 ```
 
 ### Bot não reconecta
-**Causa:** limite de reconexões atingido  
-**Solução:** use o backup Baileys.
 
-```bash
-cd Botões
-LIGAR-2.bat
-```
+- confirme a conexão com a internet
+- verifique logs em `.sys/bot.log`
+- teste o backup Baileys pela pasta `Botões`
 
 ### Terminal poluído com logs
+
 ```bash
 silencioso
 ```
 
-### WhatsApp bloqueou o cliente
-**Causa:** muitas mensagens em sequência  
-**Solução:** use rate limiting ou aumente o cooldown.
+### WhatsApp bloqueou ou gerou falhas de envio
+
+- reduza frequência de mensagens
+- ative o rate limiting
+- revise o limite de mensagens por hora
 
 ```bash
 limite on
@@ -306,11 +326,11 @@ limite on
 
 ---
 
-## 📦 Tecnologias utilizadas
+## Tecnologias utilizadas
 
 | Tecnologia | Versão | Uso |
 |-----------|--------|-----|
-| **Node.js** | 14+ | Runtime |
+| **Node.js** | 18+ | Runtime |
 | **whatsapp-web.js** | 1.23.0 | Integração principal |
 | **baileys** | 7.0.0-rc.9 | Backup e failover |
 | **puppeteer** | 24.38.0 | Automação do navegador |
@@ -318,89 +338,47 @@ limite on
 
 ---
 
-## 💡 Boas práticas
+## Roadmap
 
-### Em desenvolvimento
-```javascript
-enableTestMode();
-getTestMessages();
-```
+### Próximos passos realistas
+- [ ] Dashboard web simples para acompanhamento em tempo real
+- [ ] Integração com banco de dados para persistência mais robusta
+- [ ] Exportação de relatórios em CSV/PDF
+- [ ] Melhorias na fila e regras de priorização
 
-### Em produção
-```javascript
-const LOG_MENSAGENS = false;
-```
-
-### Backup regular
-```bash
-cp .sys/kpis.json ./backup/kpis.json
-cp .sys/historico_atendimentos.json ./backup/historico_atendimentos.json
-cp .sys/fila.json ./backup/fila.json
-```
-
----
-
-## 🔄 Roadmap
-
-### V1.1
-- [ ] Dashboard web em tempo real
-- [ ] Integração com banco de dados
-- [ ] Exportação de relatórios em PDF/Excel
-- [ ] Suporte a múltiplos atendentes simultâneos
-
-### V1.2
-- [ ] Análise de sentimento de feedback
-- [ ] Gateway de pagamento
-- [ ] Agendamento automático de atendimentos
+### Evoluções futuras possíveis
 - [ ] API REST para integrações externas
-
-### V2.0
-- [ ] App mobile para administração
-- [ ] Machine learning para recomendações
-- [ ] Múltiplas contas WhatsApp
-- [ ] Integração com CRM
+- [ ] Múltiplos atendentes operando em paralelo
+- [ ] Relatórios por horário, tipo de atendimento e produtividade
 
 ---
 
-## 📞 Suporte e contribuições
+## Suporte e contribuições
 
-### Encontrou um bug?
-Abra uma issue descrevendo:
-- problema
+Se você encontrou um problema, abra uma issue com:
+- descrição do problema
 - passos para reproduzir
 - versão do Node.js
-- screenshots ou logs que ajudem a diagnosticar
+- logs relevantes, quando possível
 
-### Quer contribuir?
-1. Faça o fork do projeto
-2. Crie uma branch para sua feature
-3. Commit com sua alteração
-4. Push para o fork
-5. Abra um Pull Request
+Contribuições são bem-vindas por meio de fork e pull request.
 
 ---
 
-## 📄 Licença
+## Licença
 
 Este projeto está sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
 **Miguel Quatro**
 
 - GitHub: [@MiguelQuatro](https://github.com/MiguelQuatro)
-- Contato: disponível no perfil do autor para dúvidas de implementação
 
 ---
 
-## ⭐ Gostou?
+## Resumo
 
-Se este projeto foi útil para você, considere deixar uma estrela no repositório para apoiar o projeto e incentivar novas melhorias.
-
----
-
-**Desenvolvido com cuidado para automação profissional no WhatsApp**
-
-*Última atualização: 2026*
+Este projeto combina automação, fila, atendimento humano e monitoramento para criar uma operação de WhatsApp mais previsível e escalável. A parte técnica já é sólida; o que faz diferença agora é deixar a documentação mais precisa, segura e alinhada ao problema real que a solução resolve.
